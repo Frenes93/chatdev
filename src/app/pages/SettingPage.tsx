@@ -38,7 +38,7 @@ import {
   setRealYamlKey,
   setStore, getBotId
 } from "~services/storage/memory-store";
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import OllamaAPISettings from "~app/components/Settings/OllamaAPISettings";
 
 const BING_STYLE_OPTIONS = [
@@ -81,7 +81,7 @@ const SettingPage = () => {
   const save = useCallback(async () => {
     const player_name = document.getElementById('player_name') as HTMLInputElement
     setStore("player_name", player_name?.value)
-    store.set("player_name", player_name?.value)
+    localStore.set("player_name", player_name?.value)
 
     let apiHost = userConfig?.openaiApiHost
     if (apiHost) {

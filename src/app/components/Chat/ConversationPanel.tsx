@@ -125,7 +125,7 @@ import {isPublicUrlFromWeb} from "~utils/format";
 import GameModeView from "~app/components/GameModeView";
 import {toastCustom} from "~app/components/Toast";
 import ErrorAction from "~app/components/Chat/ErrorAction";
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import DataSetDialog from "~app/components/Agent/DataSetDialog";
 import {PromptFlowDag, PromptFlowNode, promptflowx} from "promptflowx";
 import SwitchAgentDropdown from "~app/components/SwitchAgentDropdown";

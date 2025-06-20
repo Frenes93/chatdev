@@ -3,7 +3,7 @@ import {HuggingFaceTransformersEmbeddings} from "langchain/embeddings/hf_transfo
 import {TimeWeightedVectorStoreRetriever} from "langchain/retrievers/time_weighted";
 import {MemoryVectorStore} from "langchain/vectorstores/memory";
 import {CharacterTextSplitter, RecursiveCharacterTextSplitter, TokenTextSplitter} from "langchain/text_splitter";
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import Browser from "webextension-polyfill";
 import {Prompt} from "~services/prompts";
 import {getVersion, uuid} from "~utils";
@@ -15,7 +15,6 @@ import {
 } from "~services/storage/memory-store";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {initPromptFromFile} from "~utils/prompt";
-import Jquery from "jquery";
 import {Readability} from "@mozilla/readability";
 import {DevInfo, DevInfoPersist} from "~types/global";
 
@@ -53,17 +52,16 @@ export async function initObjectFormTransforms() {
 export async function initForWinStore() {
   await initObjectFormTransforms()
 
-  let devInfoPersist = store.get("dev_info")
+  let devInfoPersist = localStore.get<DevInfoPersist>("dev_info")
   if (devInfoPersist == null) {
     devInfoPersist = {} as DevInfoPersist
   }
 
   window.dev_info = devInfoPersist
 
-  setStore("player_name", store.get("player_name") != null?"ChatDev": store.get("player_name"))
-  setStore("i18nextLng", store.get("i18nextLng") == null ? "en" : store.get("i18nextLng"))
+  setStore("player_name", localStore.get("player_name") != null?"ChatDev": localStore.get("player_name"))
+  setStore("i18nextLng", localStore.get("i18nextLng") == null ? "en" : localStore.get("i18nextLng"))
 
-  window.$ = Jquery
   window.Readability = Readability
 
   await initPromptFromFile()
@@ -71,7 +69,7 @@ export async function initForWinStore() {
 }
 
 export async function initForWinStoreOfWeb() {
-  let devInfoPersist = store.get("dev_info")
+  let devInfoPersist = localStore.get<DevInfoPersist>("dev_info")
   if (devInfoPersist == null) {
     devInfoPersist = {} as DevInfoPersist
   }
@@ -82,7 +80,7 @@ export async function handlePersistentStorage() {
   const storageTimes = getStore("storage_times", 0)
   const win = window
   if (win.dev_info != undefined && storageTimes % 4 == 0) { // 4s check once
-    store.set("dev_info", {
+    localStore.set("dev_info", {
       prompts: win.dev_info.prompts,
       botId: win.dev_info.botId,
       player_pos: win.dev_info.player_pos,

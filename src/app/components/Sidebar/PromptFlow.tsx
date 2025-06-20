@@ -13,7 +13,7 @@ import ReactFlow, {addEdge, Background, Edge, EdgeTypes, useEdgesState, useNodes
 import * as yamlParser from 'js-yaml';
 
 import 'reactflow/dist/style.css';
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import CustomEdge from "~app/components/Sidebar/CustomEdge";
 import {Prompt,} from "~services/prompts";
 import {

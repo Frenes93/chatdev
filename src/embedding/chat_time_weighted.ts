@@ -3,7 +3,7 @@ import type { VectorStoreInterface } from "@langchain/core/vectorstores";
 import type { DocumentInterface } from "@langchain/core/documents";
 import { CallbackManagerForRetrieverRun } from "@langchain/core/callbacks/manager";
 import {Document} from "@langchain/core/documents";
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import {loadAllMessageByMark} from "~services/chat-history";
 import Browser from "webextension-polyfill";
 import {getBotId, getStore} from "~services/storage/memory-store";
