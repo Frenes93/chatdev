@@ -157,6 +157,6 @@ ChatGpt、Bing、Bard、Claude、LLama 2、Vicuna、Falcon、Qianwen、iFlytek S
 ### 3. Build from Source Code
 
 * Clone the source code.
-* Run `yarn install` to install dependencies.
-* Run `yarn build` to build the plugin.
+* Run `npm install` to install dependencies.
+* Run `npm run build` to build the plugin.
 * Follow the steps in "Manual Installation" to load the `dist` folder into your browser.
