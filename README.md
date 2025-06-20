@@ -146,4 +146,10 @@ ChatGpt、Bing、Bard、Claude、LLama 2、Vicuna、Falcon、Qianwen、iFlytek S
 * Clone the source code.
 * Run `npm install` to install dependencies.
 * Run `npm run build` to build the plugin.
+* Run `npm test` to execute the unit tests with Jest.
 * Follow the steps in "Manual Installation" to load the `dist` folder into your browser.
+
+### 2. Running Tests
+
+Ensure dependencies are installed with `npm install`. The Jest tests use `jest-fetch-mock` to simulate API responses, allowing tests to run without network access or API keys.
+Run `npm test` to execute the suite.

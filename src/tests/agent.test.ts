@@ -1,5 +1,17 @@
-import {ChatDevRemoteTransformersEmbeddings} from "../embedding/chatdev_remote_transformers.js";
-import { test, expect } from "@jest/globals";
+import { ChatDevRemoteTransformersEmbeddings } from "../embedding/chatdev_remote_transformers.js";
+import { jest, test, expect, beforeEach, afterEach } from "@jest/globals";
+import fetchMock from "jest-fetch-mock";
+
+beforeEach(() => {
+  fetchMock.resetMocks();
+  fetchMock.mockResponse(
+    JSON.stringify({ data: [{ embedding: [1, 2, 3] }] })
+  );
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
+});
 
 test("Test ChatDev.main", async () => {
   expect(true).toBe(true);
@@ -7,8 +19,8 @@ test("Test ChatDev.main", async () => {
 
 test("Test ChatDev.embedQuery", async () => {
     const embeddings =  new ChatDevRemoteTransformersEmbeddings({
-        Bearer: "jina_e1ce58cea399477997f642fca44085b6b2qtxWDwbWBIsnZ_T2IiGdgsKsqh",
-        batchSize: 512, // Default value if omitted is 512. Max is 2048
+        Bearer: "dummy",
+        batchSize: 512,
         model: "jina-embeddings-v2-base-en"
     });
     const res = await embeddings.embedQuery("Hello ChatDev IDE");
@@ -17,8 +29,8 @@ test("Test ChatDev.embedQuery", async () => {
 
 test("Test ChatDev.embedDocuments", async () => {
     const embeddings =  new ChatDevRemoteTransformersEmbeddings({
-        Bearer: "jina_e1ce58cea399477997f642fca44085b6b2qtxWDwbWBIsnZ_T2IiGdgsKsqh",
-        batchSize: 512, // Default value if omitted is 512. Max is 2048
+        Bearer: "dummy",
+        batchSize: 512,
         model: "jina-embeddings-v2-base-en"
     });
     const res = await embeddings.embedDocuments(["Hello ChatDev", "Bye bye"]);
@@ -30,8 +42,8 @@ test("Test ChatDev.embedDocuments", async () => {
 
 test("Test ChatDev concurrency", async () => {
     const embeddings =  new ChatDevRemoteTransformersEmbeddings({
-        Bearer: "jina_e1ce58cea399477997f642fca44085b6b2qtxWDwbWBIsnZ_T2IiGdgsKsqh",
-        batchSize: 512, // Default value if omitted is 512. Max is 2048
+        Bearer: "dummy",
+        batchSize: 512,
         model: "jina-embeddings-v2-base-en"
     });
     const res = await embeddings.embedDocuments([
