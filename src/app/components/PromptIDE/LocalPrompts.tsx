@@ -35,7 +35,7 @@ import {
   editorPromptTimesAtom, editorYamlTimesAtom, generateEnableAtom, isNewAgentShowAtom, showEditorAtom,
   showShareAtom
 } from "~app/state";
-import store from "store2";
+import localStore from "~services/storage/local-store";
 import {Ace, EditSession, Range} from "ace-builds";
 import {addCompleter} from 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-javascript';
