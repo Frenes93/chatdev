@@ -141,20 +141,7 @@ ChatGpt、Bing、Bard、Claude、LLama 2、Vicuna、Falcon、Qianwen、iFlytek S
 
 ## 🔨 Installation
 
-### 1. Install from Web Store
-
-1. Search for [ChatDev](https://chrome.google.com/webstore/detail/chatdev/dopllopmmfnghbahgbdejnkebfcmomej) in the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions) and click "Install."
-2. Search for [ChatDev](https://microsoftedge.microsoft.com/addons/detail/chatdev-visualize-your-a/ceoneifbmcdiihmgfjeodiholmbpmibm) in the [Microsoft-Edge-Extensions](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home) and click "Get."
-
-### 2. Manual Installation
-
-1. Download `chatdev1.5.0.zip` from the Releases page.
-2. Extract the files.
-3. In Chrome/Edge, open the extensions page (`chrome://extensions` or `edge://extensions`).
-4. Enable developer mode.
-5. Drag and drop the extracted folder onto the page to import it (do not delete the folder after importing).
-
-### 3. Build from Source Code
+### 1. Build from Source Code
 
 * Clone the source code.
 * Run `npm install` to install dependencies.
