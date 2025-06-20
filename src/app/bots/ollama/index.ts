@@ -1,4 +1,3 @@
-import { parseSSEResponse } from '~utils/sse'
 import { AbstractBot, SendMessageParams } from '../abstract-bot'
 import { requestHostPermission } from '~app/utils/permissions'
 import { ChatError, ErrorCode } from '~utils/errors'
@@ -29,6 +28,10 @@ export class OllamaBot extends AbstractBot {
         stream: true,
       }),
     })
+
+    if (!resp.ok) {
+      throw new ChatError(`${resp.status} ${resp.statusText}`, ErrorCode.NETWORK_ERROR)
+    }
 
     const decoder = new TextDecoder()
     let result = ''
