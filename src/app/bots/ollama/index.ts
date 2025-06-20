@@ -1,9 +1,9 @@
 import { parseSSEResponse } from '~utils/sse'
 import { AbstractBot, SendMessageParams } from '../abstract-bot'
-import {requestHostPermission} from "~app/utils/permissions";
-import {ChatError, ErrorCode} from "~utils/errors";
-import {getUserConfig, OllamaAPIModel} from "~services/user-config";
-import {streamAsyncIterable} from "~utils/stream-async-iterable";
+import { requestHostPermission } from '~app/utils/permissions'
+import { ChatError, ErrorCode } from '~utils/errors'
+import { getUserConfig, OllamaAPIModel } from '~services/user-config'
+import { streamAsyncIterable } from '~utils/stream-async-iterable'
 
 interface ConversationContext {
   initialized: boolean
@@ -13,10 +13,10 @@ export class OllamaBot extends AbstractBot {
   private conversationContext?: ConversationContext
 
   async doSendMessage(params: SendMessageParams) {
-    const {ollamaApi, ollamaModel} = await getUserConfig()
+    const { ollamaApi, ollamaModel } = await getUserConfig()
 
-    const urlObj = new URL(ollamaApi);
-    if (!(await requestHostPermission(urlObj.protocol + '//*.' + urlObj.hostname + "/"))) {
+    const urlObj = new URL(ollamaApi)
+    if (!(await requestHostPermission(urlObj.protocol + '//*.' + urlObj.hostname + '/'))) {
       throw new ChatError('Missing ollama api url permission', ErrorCode.MISSING_HOST_PERMISSION)
     }
 
@@ -24,11 +24,10 @@ export class OllamaBot extends AbstractBot {
       method: 'POST',
       signal: params.signal,
       body: JSON.stringify({
-        "model": ollamaModel,
-        "messages": [
-          { "role": "user", "content": params.prompt  }
-        ]
-      })
+        model: ollamaModel,
+        messages: [{ role: 'user', content: params.prompt }],
+        stream: true,
+      }),
     })
 
     const decoder = new TextDecoder()
@@ -39,14 +38,18 @@ export class OllamaBot extends AbstractBot {
       console.debug('ollama stream', str)
       const lines = str.split('\n')
       for (const line of lines) {
-        if (!line) {
+        if (!line.trim()) {
           continue
         }
         const data = JSON.parse(line)
-        const text = data.message.content
+        const text = data.message?.content
         if (text) {
           result += text
           params.onEvent({ type: 'UPDATE_ANSWER', data: { text: result } })
+        }
+        if (data.done) {
+          params.onEvent({ type: 'DONE' })
+          return
         }
       }
     }
